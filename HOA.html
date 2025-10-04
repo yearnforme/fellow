@@ -16,11 +16,13 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
         header {
             width: 100%;
             padding: 20px;
             text-align: center;
+            z-index: 10;
         }
         h1 {
             margin: 0;
@@ -47,9 +49,10 @@
             height: 600px;
             overflow-y: auto;
             overflow-x: hidden;
+            z-index: 10;
         }
         .entry {
-            background-color: #000;
+            background-color: transparent;
             padding: 10px;
             text-align: center;
         }
@@ -77,9 +80,19 @@
             color: #fff;
             text-decoration: underline;
             margin-top: 5px;
+            display: block;
         }
         .entry a:hover {
             color: #fff;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
         }
     </style>
 </head>
@@ -87,6 +100,7 @@
     <header>
         <h1>HALL OF AUTISM</h1>
     </header>
+    <canvas id="glitter-canvas"></canvas>
     <div class="container">
         <div class="entry">
             <img src="https://files.catbox.moe/0svi8x.png" alt="newport">
@@ -95,7 +109,66 @@
             <a href="https://antipred.com/pastes/newportdox" target="_blank">Dox</a>
         </div>
     </div>
+    <script>
+        const canvas = document.getElementById('glitter-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const rainbowColors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF'];
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 1 + 0.5;
+                this.speedY = Math.random() * 1 + 0.5;
+                this.color = rainbowColors[Math.floor(Math.random() * rainbowColors.length)];
+                this.opacity = 1;
+            }
+            update() {
+                this.y += this.speedY;
+                this.opacity -= 0.001;
+                if (this.opacity < 0 || this.y > canvas.height) this.opacity = 0;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.font = `${this.size * 4}px monospace`;
+                ctx.fillStyle = this.color;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('*', this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 5; i++) {
+                const x = Math.random() * canvas.width;
+                particles.push(new Particle(x, 0));
+            }
+        }
+
+        setInterval(createParticles, 100);
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = particles.filter(p => p.opacity > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        animate();
+    </script>
 </body>
 </html>
-
-

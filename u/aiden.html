@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@aiden</title>
+    <link rel="icon" type="image/gif" href="https://files.catbox.moe/iw70it.gif">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('https://files.catbox.moe/laq2fu.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #FF0000;
+            text-shadow: 0 0 6px #FF0000, 0 0 10px #FF0000, 0 0 14px #FF0000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+            cursor: url('https://files.catbox.moe/agexd4.cur'), default;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            margin-top: -20px;
+            animation: fadeIn 1s ease-in-out;
+            display: none;
+            background: rgba(50, 50, 50, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            border: 2px solid #FF0000;
+            box-shadow: 0 0 6px #FF0000, 0 0 10px #FF0000;
+            margin-right: 20px;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.6em;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .rank-list {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+            justify-content: center;
+            width: fit-content;
+        }
+        .rank-img {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+        .rank-img:hover {
+            transform: scale(1.1);
+        }
+        .tooltip {
+            position: fixed;
+            background: rgba(50, 50, 50, 0.8);
+            color: #FF0000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.8em;
+            pointer-events: none;
+            z-index: 1000;
+            text-shadow: 0 0 4px #FF0000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        p.bio {
+            font-size: 1em;
+            margin: 5px 0 10px;
+        }
+        .section {
+            margin: 10px 0;
+        }
+        .section h2 {
+            font-size: 1.4em;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .quote {
+            font-style: italic;
+            margin: 5px 0;
+            padding: 5px;
+            font-size: 0.9em;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            cursor: url('https://files.catbox.moe/agexd4.cur'), default;
+        }
+        .overlay-text {
+            font-size: 2.5em;
+            color: #FFFFFF;
+            text-shadow: 0 0 6px #FFFFFF, 0 0 10px #FFFFFF, 0 0 14px #FFFFFF;
+        }
+        .name-gif {
+            width: 100%;
+            max-width: 160px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .footer {
+            font-size: 0.8em;
+            color: #FFFFFF;
+            text-shadow: 0 0 6px #FFFFFF, 0 0 10px #FFFFFF, 0 0 14px #FFFFFF;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            display: none;
+        }
+        .music-section {
+            margin: 10px 0;
+            padding: 8px;
+            background: transparent;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+        }
+        .song-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            box-shadow: 0 0 6px #FF0000;
+        }
+        .song-info {
+            flex: 1;
+            text-align: left;
+        }
+        .song-title {
+            font-size: 1em;
+            margin: 0 0 2px 0;
+        }
+        .song-artist {
+            font-size: 0.8em;
+            margin: 0;
+            opacity: 0.8;
+        }
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FF0000;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #000000;
+            line-height: 1;
+            transition: all 0.3s;
+            box-shadow: 0 0 6px #FF0000;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #FF0000;
+        }
+        .play-btn.playing {
+            background: #FF0000;
+            color: #000000;
+        }
+        .link-image-section {
+            margin: 20px 0;
+            background: transparent;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+        .link-image-section h2 {
+            font-size: 1.4em;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .link-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .link-image:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="overlay-text">Click to Enter...</div>
+    </div>
+    <div class="container" id="main-content">
+        <div class="profile-section">
+            <img src="https://files.catbox.moe/dy2wyq.jpg" alt="Profile Picture" class="profile-img">
+            <div class="profile-info">
+                <h1>aiden
+                    <img src="https://files.catbox.moe/wnlb30.gif" alt="Name GIF" class="name-gif">
+                </h1>
+                <div class="rank-list">
+                    <img src="https://files.catbox.moe/vo9znk.png" alt="Premium Rank" class="rank-img" data-tooltip="Premium">
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2></h2>
+            <div class="quote">"Black people are like apples they hang on trees."</div>
+        </div>
+        <div class="section">
+            <h2></h2>
+            <div class="music-section">
+                <img src="https://files.catbox.moe/0chlbz.jpg" alt="Song Cover" class="song-img">
+                <div class="song-info">
+                    <p class="song-title">The Prophet</p>
+                    <p class="song-artist">Soulfly - Topic</p>
+                </div>
+                <button id="play-toggle" class="play-btn">▶</button>
+            </div>
+        </div>
+        <div class="link-image-section">
+            <h2></h2>
+            <a href="https://www.roblox.com/users/9024383596/profile" target="_blank">
+                <img src="https://files.catbox.moe/4qwkfm.png" alt="Roblox Link" class="link-image" data-tooltip="Roblox">
+            </a>
+        </div>
+        <audio id="background-audio" loop>
+            <source src="https://files.catbox.moe/8m4rtl.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <p class="footer" id="footer">@2025 Artillery.space</p>
+    <script>
+        const audio = document.getElementById('background-audio');
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('main-content');
+        const playToggle = document.getElementById('play-toggle');
+        const footer = document.getElementById('footer');
+        audio.volume = 1;
+        overlay.addEventListener('click', () => {
+            audio.play().then(() => {
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                footer.style.display = 'block';
+                playToggle.textContent = '⏸';
+                playToggle.classList.add('playing');
+            }).catch(error => {
+                console.error('Playback failed:', error);
+                alert('Audio playback failed.');
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                footer.style.display = 'block';
+            });
+        });
+        playToggle.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    playToggle.textContent = '⏸';
+                    playToggle.classList.add('playing');
+                }).catch(error => {
+                    console.error('Playback failed:', error);
+                });
+            } else {
+                audio.pause();
+                playToggle.textContent = '▶';
+                playToggle.classList.remove('playing');
+            }
+        });
+        const titleStages = [
+            "@", "@a", "@ai", "@aid", "@aide", "@aiden", "@aide", "@aid", "@ai", "@a", "@"
+        ];
+        let currentStage = 0;
+        function updateTitle() {
+            document.title = titleStages[currentStage];
+            currentStage = (currentStage + 1) % titleStages.length;
+        }
+        setInterval(updateTitle, 400);
+        const rankImages = document.querySelectorAll('.rank-img');
+        const linkImages = document.querySelectorAll('.link-image');
+        const tooltip = document.createElement('span');
+        tooltip.className = 'tooltip';
+        document.body.appendChild(tooltip);
+        [...rankImages, ...linkImages].forEach(img => {
+            img.addEventListener('mousemove', (e) => {
+                tooltip.style.display = 'block';
+                tooltip.textContent = img.getAttribute('data-tooltip');
+                tooltip.style.left = `${e.clientX + 10}px`;
+                tooltip.style.top = `${e.clientY - 30}px`;
+            });
+            img.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

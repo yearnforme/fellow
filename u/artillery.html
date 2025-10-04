@@ -175,7 +175,7 @@
     </div>
     <div class="container" id="main-content">
         <div class="profile-section">
-            <img src="https://files.catbox.moe/iw70it.gif" alt="Profile Picture" class="profile-img">
+            <img src="https://files.catbox.moe/0khy0z.jpg" alt="Profile Picture" class="profile-img">
             <div class="profile-info">
                 <h1>artillery
                     <img src="https://files.catbox.moe/wnlb30.gif" alt="Name GIF" class="name-gif">
@@ -201,6 +201,9 @@
             overlay.style.display = 'none';
             mainContent.style.display = 'block';
             footer.style.display = 'block';
+            const audio = new Audio('https://files.catbox.moe/y6pkkf.mp3');
+            audio.loop = true;
+            audio.play();
         });
         const container = document.getElementById('main-content');
         container.addEventListener('mousemove', (e) => {

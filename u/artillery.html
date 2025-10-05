@@ -197,7 +197,7 @@
     </style>
 </head>
 <body>
-    <video id="background-video" loop muted playsinline>
+    <video id="background-video" loop playsinline>
         <source src="https://files.catbox.moe/e5t7b2.mp4" type="video/mp4">
     </video>
     <div class="overlay" id="overlay">
@@ -235,9 +235,6 @@
             footer.style.display = 'block';
             video.play();
             video.classList.add('visible');
-            const audio = new Audio('https://files.catbox.moe/8f4a18.mp3');
-            audio.loop = true;
-            audio.play();
         });
         const container = document.getElementById('main-content');
         container.addEventListener('mousemove', (e) => {

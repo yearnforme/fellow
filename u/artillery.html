@@ -30,6 +30,11 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        video#background-video.visible {
+            opacity: 1;
         }
         .container {
             max-width: 550px;
@@ -157,7 +162,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgb(0, 0, 0);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -192,9 +197,8 @@
     </style>
 </head>
 <body>
-    <video id="background-video" autoplay loop muted playsinline>
+    <video id="background-video" loop muted playsinline>
         <source src="https://files.catbox.moe/e5t7b2.mp4" type="video/mp4">
-        Your browser does not support the video element.
     </video>
     <div class="overlay" id="overlay">
         <div class="overlay-text">Click to Enter...</div>
@@ -224,10 +228,13 @@
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
         const footer = document.getElementById('footer');
+        const video = document.getElementById('background-video');
         overlay.addEventListener('click', () => {
             overlay.style.display = 'none';
             mainContent.style.display = 'block';
             footer.style.display = 'block';
+            video.play();
+            video.classList.add('visible');
             const audio = new Audio('https://files.catbox.moe/8f4a18.mp3');
             audio.loop = true;
             audio.play();

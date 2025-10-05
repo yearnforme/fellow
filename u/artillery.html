@@ -21,6 +21,7 @@
             cursor: url('https://files.catbox.moe/plns6m.cur'), default;
             overflow: hidden;
             perspective: 1000px;
+            background: #000000;
         }
         video#background-video {
             position: fixed;
@@ -31,10 +32,6 @@
             object-fit: cover;
             z-index: -1;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        video#background-video.visible {
-            opacity: 1;
         }
         .container {
             max-width: 550px;
@@ -168,6 +165,7 @@
             align-items: center;
             z-index: 1000;
             cursor: url('https://files.catbox.moe/plns6m.cur'), default;
+            transition: opacity 1s ease-in-out;
         }
         .overlay-text {
             font-size: 2.5em;
@@ -230,11 +228,15 @@
         const footer = document.getElementById('footer');
         const video = document.getElementById('background-video');
         overlay.addEventListener('click', () => {
-            overlay.style.display = 'none';
-            mainContent.style.display = 'block';
-            footer.style.display = 'block';
             video.play();
-            video.classList.add('visible');
+            video.style.transition = 'opacity 1s ease-in-out';
+            video.style.opacity = '1';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                footer.style.display = 'block';
+            }, 1000);
         });
         const container = document.getElementById('main-content');
         container.addEventListener('mousemove', (e) => {

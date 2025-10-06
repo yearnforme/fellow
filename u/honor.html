@@ -10,8 +10,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: url('https://files.catbox.moe/7urdqw.gif') no-repeat center center fixed;
-            background-size: cover;
             color: #FFFFFF;
             text-shadow: 0 0 6px #FFFFFF, 0 0 10px #FFFFFF, 0 0 14px #FFFFFF;
             display: flex;
@@ -22,18 +20,30 @@
             position: relative;
             cursor: url('https://files.catbox.moe/agexd4.cur'), default;
             overflow: hidden;
+            perspective: 1000px;
+        }
+        video#background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
         }
         .container {
-            max-width: 500px;
-            padding: 20px;
+            max-width: 550px;
+            padding: 25px;
             margin-top: -20px;
             animation: fadeIn 1s ease-in-out;
             display: none;
-            background: rgba(50, 50, 50, 0.6);
+            background: rgba(50, 50, 50, 0.15);
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(1px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -94,17 +104,13 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             display: none;
         }
-        p.bio {
-            font-size: 1em;
-            margin: 5px 0 10px;
-        }
         .section {
-            margin: 10px 0;
+            margin: 5px 0;
         }
         .section h2 {
             font-size: 1.4em;
             padding-bottom: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         .quote {
             font-style: italic;
@@ -112,19 +118,45 @@
             padding: 5px;
             font-size: 0.9em;
         }
+        .link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: inline-block;
+            transition: text-shadow 0.3s;
+        }
+        .link:hover {
+            text-shadow: 0 0 8px #FFFFFF, 0 0 12px #FFFFFF, 0 0 16px #FFFFFF;
+        }
+        .rainbow-text {
+            text-decoration: underline;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s ease-in-out infinite;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgb(0, 0, 0);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            cursor: pointer;
             cursor: url('https://files.catbox.moe/agexd4.cur'), default;
+            transition: opacity 1s ease-in-out;
         }
         .overlay-text {
             font-size: 2.5em;
@@ -151,71 +183,13 @@
             text-align: center;
             display: none;
         }
-        .music-section {
-            margin: 10px 0;
-            padding: 8px;
-            background: transparent;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-        }
-        .song-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            box-shadow: 0 0 6px #FFFFFF;
-        }
-        .song-info {
-            flex: 1;
-            text-align: left;
-        }
-        .song-title {
-            font-size: 1em;
-            margin: 0 0 2px 0;
-        }
-        .song-artist {
-            font-size: 0.8em;
-            margin: 0;
-            opacity: 0.8;
-        }
-        .play-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #FFFFFF;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: #000000;
-            line-height: 1;
-            transition: all 0.3s;
-            box-shadow: 0 0 6px #FFFFFF;
-        }
-        .play-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px #FFFFFF;
-        }
-        .play-btn.playing {
-            background: #FFFFFF;
-            color: #000000;
-        }
         .link-image-section {
-            margin: 20px 0;
+            margin: 5px 0;
             background: transparent;
             display: flex;
             gap: 8px;
             justify-content: center;
             align-items: center;
-        }
-        .link-image-section h2 {
-            font-size: 1.4em;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
         }
         .link-image {
             width: 40px;
@@ -229,12 +203,15 @@
     </style>
 </head>
 <body>
+    <video id="background-video" loop playsinline>
+        <source src="https://files.catbox.moe/g217ht.mp4" type="video/mp4">
+    </video>
     <div class="overlay" id="overlay">
         <div class="overlay-text">Click to Enter...</div>
     </div>
     <div class="container" id="main-content">
         <div class="profile-section">
-            <img src="https://files.catbox.moe/5ijsiz.jpg" alt="Profile Picture" class="profile-img">
+            <img src="https://files.catbox.moe/vse8uu.png" alt="Profile Picture" class="profile-img">
             <div class="profile-info">
                 <h1>honor
                     <img src="https://files.catbox.moe/wnlb30.gif" alt="Name GIF" class="name-gif">
@@ -250,97 +227,78 @@
             <h2></h2>
             <div class="quote">"Real Bosnian Soldier."</div>
         </div>
-        <div class="section">
-            <h2></h2>
-            <div class="music-section">
-                <img src="https://i1.sndcdn.com/artworks-LycAlFyGxK4e-0-t500x500.jpg" alt="Song Cover" class="song-img">
-                <div class="song-info">
-                    <p class="song-title">jason (feat. 1oneam)</p>
-                    <p class="song-artist">perc40</p>
-                </div>
-                <button id="play-toggle" class="play-btn">▶</button>
-            </div>
-        </div>
         <div class="link-image-section">
             <h2></h2>
-            <a href="https://t.me/cloneazepams" target="_blank">
-                <img src="https://files.catbox.moe/wmhvv4.png" alt="Telegram Link" class="link-image" data-tooltip="Telegram">
+            <a href="https://t.me/cloneazepams" target="_blank" class="link">
+                <img src="https://files.catbox.moe/wmhvv4.png" alt="Telegram Link" class="link-image">
             </a>
-            <a href="https://discord.com/users/1065077921200476160" target="_blank">
-                <img src="https://files.catbox.moe/2soxa5.png" alt="Discord Link" class="link-image" data-tooltip="Discord">
+            <a href="https://discord.com/users/1065077921200476160" target="_blank" class="link">
+                <img src="https://files.catbox.moe/2soxa5.png" alt="Discord Link" class="link-image">
             </a>
-            <a href="https://doxbin.com/user/bosnian" target="_blank">
-                <img src="https://files.catbox.moe/b100qh.png" alt="Doxbin Link" class="link-image" data-tooltip="Doxbin">
+            <a href="https://doxbin.com/user/bosnian" target="_blank" class="link">
+                <img src="https://files.catbox.moe/b100qh.png" alt="Doxbin Link" class="link-image">
             </a>
         </div>
-        <audio id="background-audio" loop>
-            <source src="https://files.catbox.moe/bf14ju.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
     </div>
     <p class="footer" id="footer">@2025 Artillery.space</p>
     <script>
-        const audio = document.getElementById('background-audio');
-        const overlay = document.getElementById('overlay');
-        const mainContent = document.getElementById('main-content');
-        const playToggle = document.getElementById('play-toggle');
-        const footer = document.getElementById('footer');
-        audio.volume = 1;
+        const overlay = document.getElementById('overlay')
+        const mainContent = document.getElementById('main-content')
+        const footer = document.getElementById('footer')
+        const video = document.getElementById('background-video')
         overlay.addEventListener('click', () => {
-            audio.play().then(() => {
-                overlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                footer.style.display = 'block';
-                playToggle.textContent = '⏸';
-                playToggle.classList.add('playing');
-            }).catch(error => {
-                console.error('Playback failed:', error);
-                alert('Audio playback failed.');
-                overlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                footer.style.display = 'block';
-            });
-        });
-        playToggle.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playToggle.textContent = '⏸';
-                    playToggle.classList.add('playing');
-                }).catch(error => {
-                    console.error('Playback failed:', error);
-                });
-            } else {
-                audio.pause();
-                playToggle.textContent = '▶';
-                playToggle.classList.remove('playing');
-            }
-        });
-        const titleStages = [
-            "@", "@h", "@ho", "@hon", "@hono", "@honor", "@hono", "@hon", "@ho", "@h", "@"
-        ];
-        let currentStage = 0;
+            video.play()
+            overlay.style.opacity = '0'
+            setTimeout(() => {
+                overlay.style.display = 'none'
+                mainContent.style.display = 'block'
+                footer.style.display = 'block'
+            }, 1000)
+        })
+        const container = document.getElementById('main-content')
+        let isMouseOverContainer = false
+        container.addEventListener('mouseenter', () => {
+            isMouseOverContainer = true
+        })
+        container.addEventListener('mouseleave', () => {
+            isMouseOverContainer = false
+            container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)'
+        })
+        container.addEventListener('mousemove', (e) => {
+            if (!isMouseOverContainer) return
+            requestAnimationFrame(() => {
+                const rect = container.getBoundingClientRect()
+                const x = e.clientX - rect.left
+                const y = e.clientY - rect.top
+                const centerX = rect.width / 2
+                const centerY = rect.height / 2
+                const rotateX = (y - centerY) / 15
+                const rotateY = (centerX - x) / 15
+                container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+            })
+        })
+        const titleStages = ["@","@h","@ho","@hon","@hono","@honor","@hono","@hon","@ho","@h","@"]
+        let currentStage = 0
         function updateTitle() {
-            document.title = titleStages[currentStage];
-            currentStage = (currentStage + 1) % titleStages.length;
+            document.title = titleStages[currentStage]
+            currentStage = (currentStage + 1) % titleStages.length
         }
-        setInterval(updateTitle, 400);
-        const rankImages = document.querySelectorAll('.rank-img');
-        const linkImages = document.querySelectorAll('.link-image');
-        const tooltip = document.createElement('span');
-        tooltip.className = 'tooltip';
-        document.body.appendChild(tooltip);
-        [...rankImages, ...linkImages].forEach(img => {
+        setInterval(updateTitle, 400)
+        const rankImages = document.querySelectorAll('.rank-img')
+        const tooltip = document.createElement('span')
+        tooltip.className = 'tooltip'
+        document.body.appendChild(tooltip)
+        rankImages.forEach(img => {
             img.addEventListener('mousemove', (e) => {
-                tooltip.style.display = 'block';
-                tooltip.textContent = img.getAttribute('data-tooltip');
-                tooltip.style.left = `${e.clientX + 10}px`;
-                tooltip.style.top = `${e.clientY - 30}px`;
-            });
+                tooltip.style.display = 'block'
+                tooltip.textContent = img.getAttribute('data-tooltip')
+                tooltip.style.left = `${e.clientX + 10}px`
+                tooltip.style.top = `${e.clientY - 30}px`
+            })
             img.addEventListener('mouseleave', () => {
-                tooltip.style.display = 'none';
-            });
-        });
+                tooltip.style.display = 'none'
+            })
+        })
     </script>
 </body>
 </html>
-

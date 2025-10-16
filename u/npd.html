@@ -10,8 +10,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: url('https://files.catbox.moe/yxqfig.jpg') no-repeat center center fixed;
-            background-size: cover;
             color: #FFFFFF;
             text-shadow: 0 0 6px #FFFFFF, 0 0 10px #FFFFFF, 0 0 14px #FFFFFF;
             display: flex;
@@ -20,18 +18,37 @@
             min-height: 100vh;
             text-align: center;
             position: relative;
+            cursor: url(''), default;
+            overflow: hidden;
+            perspective: 1000px;
+            background: #000000;
+        }
+        video#background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0;
         }
         .container {
-            max-width: 500px;
-            padding: 20px;
+            max-width: 550px;
+            padding: 25px;
             margin-top: -20px;
             animation: fadeIn 1s ease-in-out;
             display: none;
-            background: rgba(50, 50, 50, 0.6);
+            background: rgba(50, 50, 50, 0.15);
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(1px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+        .container:hover {
+            transform: rotateX(0deg) rotateY(0deg);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -92,10 +109,6 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             display: none;
         }
-        p.bio {
-            font-size: 1em;
-            margin: 5px 0 10px;
-        }
         .section {
             margin: 10px 0;
         }
@@ -105,11 +118,21 @@
             margin-bottom: 10px;
         }
         .quote {
-            margin: 5px auto;
+            font-style: italic;
+            margin: 5px 0;
             padding: 5px;
-            display: block;
-            max-width: 100%;
-            text-align: center;
+            font-size: 0.9em;
+        }
+        .link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: inline-block;
+            transition: text-shadow 0.3s;
+        }
+        .link:hover {
+            text-shadow: 0 0 8px #FFFFFF, 0 0 12px #FFFFFF, 0 0 16px #FFFFFF;
         }
         .overlay {
             position: fixed;
@@ -117,12 +140,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgb(0, 0, 0);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            cursor: pointer;
+            cursor: url(''), default;
+            transition: opacity 1s ease-in-out;
         }
         .overlay-text {
             font-size: 2.5em;
@@ -149,86 +173,18 @@
             text-align: center;
             display: none;
         }
-        .music-section {
-            margin: 10px 0;
-            padding: 8px;
-            background: transparent;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-        }
-        .song-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            box-shadow: 0 0 6px #FFFFFF;
-        }
-        .song-info {
-            flex: 1;
-            text-align: left;
-        }
-        .song-title {
-            font-size: 1em;
-            margin: 0 0 2px 0;
-        }
-        .song-artist {
-            font-size: 0.8em;
-            margin: 0;
-            opacity: 0.8;
-        }
-        .play-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #FFFFFF;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: #000000;
-            line-height: 1;
-            transition: all 0.3s;
-            box-shadow: 0 0 6px #FFFFFF;
-        }
-        .play-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px #FFFFFF;
-        }
-        .play-btn.playing {
-            background: #FFFFFF;
-            color: #000000;
-        }
-        .link-image-section {
-            margin: 10px 0;
-            background: transparent;
-        }
-        .link-image-section h2 {
-            font-size: 1.4em;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
-        .link-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-        .link-image:hover {
-            transform: scale(1.05);
-        }
     </style>
 </head>
 <body>
+    <video id="background-video" loop playsinline muted>
+        <source src="https://files.catbox.moe/nw4yca.mp4" type="video/mp4">
+    </video>
     <div class="overlay" id="overlay">
         <div class="overlay-text">Click to Enter...</div>
     </div>
     <div class="container" id="main-content">
         <div class="profile-section">
-            <img src="https://files.catbox.moe/y4yaae.gif" alt="Profile Picture" class="profile-img">
+            <img src="https://doxbin.com/avatar/npd" alt="Profile Picture" class="profile-img">
             <div class="profile-info">
                 <h1>npd
                     <img src="https://files.catbox.moe/wnlb30.gif" alt="Name GIF" class="name-gif">
@@ -241,67 +197,46 @@
         </div>
         <div class="section">
             <h2></h2>
-            <img src="https://files.catbox.moe/jw8p0o.gif" alt="Favorite Quote Image" class="quote">
-        </div>
-        <div class="section">
-            <h2></h2>
-            <div class="music-section">
-                <img src="https://i1.sndcdn.com/artworks-8RMgyDvc1F7gxxwk-8yqjjg-t500x500.png" alt="Song Cover" class="song-img">
-                <div class="song-info">
-                    <p class="song-title">Chucky Chase Nigga FLIP (prod vznzz)</p>
-                    <p class="song-artist">vznzzvault</p>
-                </div>
-                <button id="play-toggle" class="play-btn">▶</button>
-            </div>
-        </div>
-        <div class="link-image-section">
-            <h2></h2>
-            <a href="https://doxbin.com/user/npd" target="_blank">
-                <img src="https://files.catbox.moe/g6oevk.png" alt="Link Image" class="link-image">
+            <div class="quote">I rape sophia.</div>
+            <a href="https://doxbin.com/user/npd" class="link" target="_blank">
+                <img src="https://files.catbox.moe/g6oevk.png" alt="Link Image" style="width: 40px; height: 40px; border-radius: 8px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             </a>
         </div>
-        <audio id="background-audio" loop>
-            <source src="https://files.catbox.moe/52htve.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
     </div>
     <p class="footer" id="footer">@2025 Artillery.space</p>
     <script>
-        const audio = document.getElementById('background-audio');
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
-        const playToggle = document.getElementById('play-toggle');
         const footer = document.getElementById('footer');
-        audio.volume = 1;
+        const video = document.getElementById('background-video');
+        
         overlay.addEventListener('click', () => {
-            audio.play().then(() => {
+            video.play();
+            video.style.transition = 'opacity 1s ease-in-out';
+            video.style.opacity = '1';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
                 overlay.style.display = 'none';
                 mainContent.style.display = 'block';
                 footer.style.display = 'block';
-                playToggle.textContent = '⏸';
-                playToggle.classList.add('playing');
-            }).catch(error => {
-                console.error('Playback failed:', error);
-                alert('Audio playback failed.');
-                overlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                footer.style.display = 'block';
-            });
+            }, 1000);
         });
-        playToggle.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playToggle.textContent = '⏸';
-                    playToggle.classList.add('playing');
-                }).catch(error => {
-                    console.error('Playback failed:', error);
-                });
-            } else {
-                audio.pause();
-                playToggle.textContent = '▶';
-                playToggle.classList.remove('playing');
-            }
+        
+        const container = document.getElementById('main-content');
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            container.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
+        container.addEventListener('mouseleave', () => {
+            container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
+        
         const titleStages = [
             "@", "@n", "@np", "@npd", "@np", "@n", "@"
         ];
@@ -311,6 +246,7 @@
             currentStage = (currentStage + 1) % titleStages.length;
         }
         setInterval(updateTitle, 400);
+        
         const rankImages = document.querySelectorAll('.rank-img');
         const tooltip = document.createElement('span');
         tooltip.className = 'tooltip';
@@ -329,4 +265,3 @@
     </script>
 </body>
 </html>
-

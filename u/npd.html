@@ -176,7 +176,7 @@
     </style>
 </head>
 <body>
-    <video id="background-video" loop playsinline muted>
+    <video id="background-video" loop playsinline autoplay>
         <source src="https://files.catbox.moe/nw4yca.mp4" type="video/mp4">
     </video>
     <div class="overlay" id="overlay">
@@ -212,6 +212,7 @@
         
         overlay.addEventListener('click', () => {
             video.play();
+            video.muted = false;
             video.style.transition = 'opacity 1s ease-in-out';
             video.style.opacity = '1';
             overlay.style.opacity = '0';

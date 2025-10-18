@@ -134,6 +134,21 @@
         .link:hover {
             text-shadow: 0 0 8px #FFFFFF, 0 0 12px #FFFFFF, 0 0 16px #FFFFFF;
         }
+        .rainbow-text {
+            text-decoration: underline;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s ease-in-out infinite;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .overlay {
             position: fixed;
             top: 0;
@@ -173,6 +188,11 @@
             text-align: center;
             display: none;
         }
+        .hoa-link {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -198,6 +218,9 @@
         <div class="section">
             <h2></h2>
             <div class="quote">I rape sophia.</div>
+            <div class="hoa-link">
+                <a href="https://artillery.space/HOA" class="link" target="_blank"><span class="rainbow-text">HOA</span></a>
+            </div>
             <a href="https://doxbin.com/user/npd" class="link" target="_blank">
                 <img src="https://files.catbox.moe/g6oevk.png" alt="Link Image" style="width: 40px; height: 40px; border-radius: 8px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             </a>

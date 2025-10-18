@@ -196,8 +196,8 @@
     </style>
 </head>
 <body>
-    <video id="background-video" loop playsinline autoplay>
-        <source src="https://files.catbox.moe/nw4yca.mp4" type="video/mp4">
+    <video id="background-video" loop playsinline muted>
+        <source src="https://files.catbox.moe/5l4jd5.mp4" type="video/mp4">
     </video>
     <div class="overlay" id="overlay">
         <div class="overlay-text">Click to Enter...</div>
@@ -234,8 +234,8 @@
         const video = document.getElementById('background-video');
         
         overlay.addEventListener('click', () => {
-            video.play();
-            video.muted = false;
+            video.muted = false; // Unmute the video
+            video.play(); // Start video playback
             video.style.transition = 'opacity 1s ease-in-out';
             video.style.opacity = '1';
             overlay.style.opacity = '0';
@@ -289,4 +289,3 @@
     </script>
 </body>
 </html>
-

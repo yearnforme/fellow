@@ -33,6 +33,9 @@
             z-index: -1;
             opacity: 0;
         }
+        audio#background-music {
+            display: none;
+        }
         .container {
             max-width: 550px;
             padding: 25px;
@@ -197,14 +200,20 @@
 </head>
 <body>
     <video id="background-video" loop playsinline muted>
-        <source src="https://files.catbox.moe/5l4jd5.mp4" type="video/mp4">
+        <source src="https://files.catbox.moe/e23phb.mp4" type="video/mp4">
     </video>
+
+    <audio id="background-music" loop>
+        <source src="https://files.catbox.moe/b24lp8.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="overlay" id="overlay">
         <div class="overlay-text">Click to Enter...</div>
     </div>
+
     <div class="container" id="main-content">
         <div class="profile-section">
-            <img src="https://files.catbox.moe/5mnmm8.png" alt="Profile Picture" class="profile-img">
+            <img src="https://files.catbox.moe/klv6i5.jpg" alt="Profile Picture" class="profile-img">
             <div class="profile-info">
                 <h1>npd
                     <img src="https://files.catbox.moe/wnlb30.gif" alt="Name GIF" class="name-gif">
@@ -217,27 +226,36 @@
         </div>
         <div class="section">
             <h2></h2>
-            <div class="quote">I rape sophia.</div>
+            <div class="quote">check out https://linktr.ee/antipred</div>
             <div class="hoa-link">
-                <a href="https://antipred.com/HOA" class="link" target="_blank"><span class="rainbow-text">HOA</span></a>
+                <a href="https://artillery.space/HOA" class="link" target="_blank"><span class="rainbow-text">HOA</span></a>
             </div>
             <a href="https://doxbin.com/user/npd" class="link" target="_blank">
                 <img src="https://files.catbox.moe/g6oevk.png" alt="Link Image" style="width: 40px; height: 40px; border-radius: 8px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             </a>
         </div>
     </div>
+
     <p class="footer" id="footer">@2025 Artillery.space</p>
+
     <script>
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
         const footer = document.getElementById('footer');
         const video = document.getElementById('background-video');
+        const audio = document.getElementById('background-music');
         
         overlay.addEventListener('click', () => {
-            video.muted = false; // Unmute the video
-            video.play(); // Start video playback
+            // Unmute and play video
+            video.muted = false;
+            video.play();
             video.style.transition = 'opacity 1s ease-in-out';
             video.style.opacity = '1';
+
+            // Play music
+            audio.play();
+
+            // Fade out overlay
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
@@ -261,9 +279,7 @@
             container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
         });
         
-        const titleStages = [
-            "@", "@n", "@np", "@npd", "@np", "@n", "@"
-        ];
+        const titleStages = ["@", "@n", "@np", "@npd", "@np", "@n", "@"];
         let currentStage = 0;
         function updateTitle() {
             document.title = titleStages[currentStage];
